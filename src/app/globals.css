@@ -9,7 +9,8 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden; /* Mencegah layar goyang kiri-kanan di HP */
+  overflow-x: hidden;
+  /* Mencegah layar goyang kiri-kanan di HP */
 }
 
 /* =================================================================
@@ -41,13 +42,16 @@ body {
 
 .hover-3d:hover {
   transform: translateY(-8px) scale(1.02) rotateX(2deg);
-  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15); /* Bayangan ungu halus */
-  background-color: rgba(255, 255, 255, 0.85); /* Jadi lebih putih saat di-hover */
+  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15);
+  /* Bayangan ungu halus */
+  background-color: rgba(255, 255, 255, 0.85);
+  /* Jadi lebih putih saat di-hover */
   z-index: 10;
 }
 
 .hover-3d:active {
-  transform: scale(0.98); /* Efek memendek saat diklik */
+  transform: scale(0.98);
+  /* Efek memendek saat diklik */
 }
 
 /* 3. Text Glow (Kilau Teks) */
@@ -59,6 +63,7 @@ body {
 .animation-delay-2000 {
   animation-delay: 2s;
 }
+
 .animation-delay-4000 {
   animation-delay: 4s;
 }
@@ -88,11 +93,13 @@ body {
 .prose {
   max-width: 100%;
 }
+
 .prose p {
   margin: 1rem 0;
   line-height: 1.8;
   color: #4b5563;
 }
+
 .prose h2 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
@@ -100,6 +107,7 @@ body {
   font-size: 1.5rem;
   color: #1f2937;
 }
+
 .prose ul {
   list-style-type: disc;
   padding-left: 1.5rem;
@@ -111,31 +119,73 @@ body {
    ========================================= */
 
 @keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
 }
 
 @keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 0.4; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.4;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =========================================
@@ -147,12 +197,14 @@ body {
 .dark-ambience .text-gray-800,
 .dark-ambience .text-gray-700,
 .dark-ambience .text-gray-600 {
-  color: #f1f5f9 !important; /* Slate-100 */
+  color: #f1f5f9 !important;
+  /* Slate-100 */
 }
 
 .dark-ambience .text-gray-500,
 .dark-ambience .text-gray-400 {
-  color: #cbd5e1 !important; /* Slate-300 */
+  color: #cbd5e1 !important;
+  /* Slate-300 */
 }
 
 /* 2. UBAH WARNA JUDUL GRADIENT JADI PUTIH */
@@ -160,7 +212,7 @@ body {
   background: none !important;
   -webkit-text-fill-color: white !important;
   color: white !important;
-  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 /* 3. UBAH KARTU KACA (GLASS) JADI GELAP TRANSPARAN */
@@ -169,15 +221,16 @@ body {
 .dark-ambience .bg-white\/70,
 .dark-ambience .bg-white\/60,
 .dark-ambience .bg-white\/50,
-.dark-ambience .bg-white\/40, 
+.dark-ambience .bg-white\/40,
 .dark-ambience .glass-panel,
 .dark-ambience .glass-card {
-  background-color: rgba(0, 0, 0, 0.4) !important; /* Hitam Transparan */
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  /* Hitam Transparan */
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* 4. UBAH TOMBOL/INPUT BIAR TETAP KELIHATAN */
-.dark-ambience input, 
+.dark-ambience input,
 .dark-ambience textarea {
   background-color: rgba(0, 0, 0, 0.5) !important;
   color: white !important;
@@ -187,29 +240,4 @@ body {
 .dark-ambience nav {
   background-color: rgba(0, 0, 0, 0.2) !important;
   border-bottom-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* TAMBAHAN BARU: FIX INPUT & DROPDOWN */
-
-/* Paksa opsi dropdown berwarna gelap di mode ambience */
-.dark-ambience select option {
-  background-color: #1e293b; /* Slate-800 */
-  color: white;
-}
-
-/* Fix icon kalender/jam agar terlihat putih di mode gelap */
-.dark-ambience ::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
-
-/* Pastikan placeholder terlihat */
-.dark-ambience ::placeholder {
-  color: #94a3b8 !important; /* Slate-400 */
-}
-
-/* Pastikan border input terlihat */
-.dark-ambience input, 
-.dark-ambience textarea,
-.dark-ambience select {
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }

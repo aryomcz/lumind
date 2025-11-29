@@ -77,19 +77,19 @@ export default function SoundPlayer() {
 
   return (
     <div className={`
-        fixed z-[60] flex flex-col items-end transition-all duration-500
-        top-20 right-4 
+        fixed z-50 flex flex-col items-end transition-all duration-500
+        top-1/2 right-4 
         md:top-auto md:bottom-6 md:right-6
     `}>
       
-      <audio ref={audioRef} loop />
+      <audio className="cursor-pointer" ref={audioRef} loop />
 
       {/* PANEL KONTROL */}
       <div 
         className={`
           mb-4 bg-white/80 backdrop-blur-xl border border-white/60 
           p-5 rounded-2xl shadow-2xl transition-all duration-300 origin-top-right md:origin-bottom-right
-          ${isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-0 opacity-0 -translate-y-10 md:translate-y-10 pointer-events-none"}
+          ${isOpen ? "scale-100 opacity-100 translate-y-0 block" : "scale-0 opacity-0 -translate-y-10 md:translate-y-10 pointer-events-none hidden"}
         `}
       >
         <div className="flex justify-between items-center mb-4 min-w-[200px]">
@@ -100,11 +100,11 @@ export default function SoundPlayer() {
             {/* Tombol Reset */}
             <div className="flex gap-2">
                 {activeSound && (
-                    <button onClick={handleStopAll} className="text-rose-500 hover:text-rose-700 text-xs font-bold" aria-label="Matikan suara">
+                    <button onClick={handleStopAll} className="text-rose-500 hover:text-rose-700 text-xs font-bold cursor-pointer" aria-label="Matikan suara">
                         Reset
                     </button>
                 )}
-                <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-rose-500" aria-label="Tutup panel">
+                <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-rose-500 cursor-pointer" aria-label="Tutup panel">
                     <X size={16} />
                 </button>
             </div>
@@ -117,7 +117,7 @@ export default function SoundPlayer() {
                     onClick={() => handleSoundChange(sound.id)}
                     aria-label={`Mode ${sound.label}`}
                     className={`
-                        flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300
+                        flex flex-col items-center justify-center p-3 rounded-xl transition-all duration-300 cursor-pointer
                         ${activeSound === sound.id 
                             ? "bg-teal-600 text-white shadow-lg scale-105" 
                             : "bg-gray-100 text-gray-500 hover:bg-teal-50 hover:text-teal-600"
@@ -151,7 +151,7 @@ export default function SoundPlayer() {
         aria-label="Menu Suara Latar"
         className={`
             p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95
-            flex items-center justify-center relative border border-white/40 backdrop-blur-md
+            flex items-center justify-center relative border border-white/40 backdrop-blur-md cursor-pointer
             ${isOpen || activeSound 
                 ? "bg-teal-600 text-white rotate-0 shadow-teal-200" 
                 : "bg-white/70 text-teal-600 hover:bg-white"

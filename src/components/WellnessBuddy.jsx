@@ -87,7 +87,7 @@ export default function WellnessBuddy() {
           <button
             key={task.id}
             onClick={() => toggleTask(task.id)}
-            className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 text-left group cursor-pointer
+            className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 text-left group cursor-pointer 
               ${task.done 
                 ? "bg-teal-50 border-teal-200 text-gray-400 line-through" 
                 : "bg-white border-gray-100 hover:border-teal-300 text-gray-700"
