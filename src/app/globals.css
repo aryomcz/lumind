@@ -1,129 +1,119 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f0fdfa;
   --foreground: #171717;
-
-  --primary: #4f46e5;
-  --primary-light: #6366f1;
-  --accent-soft: #F7F9FC;
-
-  --radius: 1rem;
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #f5f5f5;
-  --accent-soft: #071025;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
-  --radius-xl: var(--radius);
 }
 
 body {
-  @apply bg-[var(--accent-soft)] text-gray-800 font-sans;
   background-color: var(--background);
   color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden; /* Mencegah layar goyang kiri-kanan di HP */
 }
 
-/* animations */
-@keyframes breath {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.9;
-  }
+/* =================================================================
+   CUSTOM STYLES (Ditulis dengan CSS Murni agar Anti-Error)
+   ================================================================= */
 
-  50% {
-    transform: scale(1.15);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(0.85);
-    opacity: 0.9;
-  }
+/* 1. Glassmorphism (Efek Kaca) */
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-.animate-breath {
-  animation: breath 5s infinite ease-in-out;
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
-@keyframes heroFloat {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
+/* 2. Efek 3D Hover (Membal & Miring) - INI YANG BIKIN SERU! */
+.hover-3d {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, background-color 0.3s ease;
 }
 
-.animate-hero {
-  animation: heroFloat 6s ease-in-out infinite;
+.hover-3d:hover {
+  transform: translateY(-8px) scale(1.02) rotateX(2deg);
+  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15); /* Bayangan ungu halus */
+  background-color: rgba(255, 255, 255, 0.85); /* Jadi lebih putih saat di-hover */
+  z-index: 10;
 }
 
-@keyframes fade {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.hover-3d:active {
+  transform: scale(0.98); /* Efek memendek saat diklik */
 }
 
-.animate-fade {
-  animation: fade 0.2s ease-out;
+/* 3. Text Glow (Kilau Teks) */
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
+/* 4. Utility Animasi Helper */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.animate-gradient {
+  background-size: 300% 300%;
+  animation: gradient-move 10s ease infinite;
+}
+
+.animate-blob {
+  animation: blob 10s infinite alternate;
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* 5. Typography Artikel */
 .prose {
   max-width: 100%;
 }
-
 .prose p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.7;
+  margin: 1rem 0;
+  line-height: 1.8;
+  color: #4b5563;
 }
-
 .prose h2 {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
 }
 
-.card-hover {
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
+/* =========================================
+   KEYFRAMES (Gerakan Animasi)
+   ========================================= */
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
-}
-
-@layer utilities {
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes blob {
@@ -133,39 +123,17 @@ body {
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
-}
-
 @keyframes breathe {
   0%, 100% { transform: scale(1); opacity: 0.8; }
   50% { transform: scale(1.15); opacity: 0.4; }
 }
 
-.animate-breathe {
-  animation: breathe 4s ease-in-out infinite;
-}
-
-@layer utilities {
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-move 8s ease infinite;
-  }
-}
-
-@keyframes gradient-move {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Animasi Floating untuk Icon */
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }

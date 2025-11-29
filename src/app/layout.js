@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MobileDock from "@/components/MobileDock";
 import SoundPlayer from "@/components/SoundPlayer";
 
 export const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="flex-1">{children}</main>
         <SoundPlayer />
+        <MobileDock />
         <Footer />
       </body>
     </html>

@@ -1,104 +1,76 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, HeartHandshake, Smile } from "lucide-react"; // Ikon pelengkap
+import { Smile, HeartHandshake } from "lucide-react";
+import StreakCounter from "@/components/StreakCounter";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Efek shadow muncul saat di-scroll agar tidak flat
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Mood Tracker", href: "/mood" },
+    { name: "Mood", href: "/mood" },
     { name: "Breathing", href: "/breathing" },
     { name: "Articles", href: "/articles" },
   ];
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/70 backdrop-blur-md shadow-lg border-b border-white/20"
-          : "bg-transparent py-2"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${
+      scrolled 
+      ? "bg-white/70 backdrop-blur-md shadow-sm py-2" 
+      : "bg-transparent py-4"
+    }`}>
+      <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         
-        {/* LOGO AREA - Dibuat playful */}
+        {/* KIRI: LOGO */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-gradient-to-tr from-teal-400 to-green-300 p-2 rounded-xl text-white transform group-hover:rotate-12 transition duration-300 shadow-lg">
+          <div className="bg-gradient-to-tr from-teal-400 to-indigo-500 p-2 rounded-xl text-white group-hover:rotate-12 transition-transform shadow-lg shadow-teal-200">
             <Smile size={24} strokeWidth={2.5} />
           </div>
-          <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-green-500 tracking-tight">
+          
+          {/* PERBAIKAN DI SINI: Saya hapus 'hidden sm:block' */}
+          {/* Saya ubah ukurannya: 'text-xl' di HP, 'text-2xl' di Laptop */}
+          <span className="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600 tracking-tight block">
             MindEase
           </span>
         </Link>
 
-        {/* DESKTOP NAV - Menggunakan style 'Pill' yang empuk */}
-        <div className="hidden md:flex items-center gap-2">
+        {/* TENGAH: DESKTOP MENU (Hanya Desktop) */}
+        <div className="hidden md:flex items-center gap-1 bg-white/50 backdrop-blur-md px-2 py-1.5 rounded-full border border-white/50 shadow-sm absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-2 text-gray-600 font-medium rounded-full hover:bg-teal-50 hover:text-teal-600 transition-all duration-300 hover:scale-105"
+              className="px-5 py-2 text-gray-600 font-bold text-sm rounded-full hover:bg-white hover:text-teal-600 hover:shadow-md transition-all duration-300"
             >
               {link.name}
             </Link>
           ))}
-          
-          {/* Tombol Khusus Hotline - Menonjol untuk urgensi tapi tetap cantik */}
-          <Link
-            href="/hotline"
-            className="ml-4 px-6 py-2.5 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold rounded-full shadow-md hover:shadow-xl hover:from-rose-500 hover:to-pink-600 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2"
-          >
-            <HeartHandshake size={18} />
-            Help Center
-          </Link>
         </div>
 
-        {/* MOBILE TOGGLE - Tombol hamburger yang lebih soft */}
-        <button
-          className="md:hidden p-2 text-teal-600 bg-teal-50 rounded-lg hover:bg-teal-100 transition"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+        {/* KANAN: STREAK & HOTLINE */}
+        <div className="flex items-center gap-3">
+           
+           {/* STREAK COUNTER */}
+           <div className="scale-90 sm:scale-100">
+              <StreakCounter />
+           </div>
 
-      {/* MOBILE DROPDOWN - Animasi smooth & layout card */}
-      <div
-        className={`md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-t border-teal-100 shadow-xl transition-all duration-300 ease-in-out origin-top ${
-          open ? "opacity-100 scale-y-100 py-6" : "opacity-0 scale-y-0 h-0 overflow-hidden"
-        }`}
-      >
-        <div className="flex flex-col space-y-2 px-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="block px-4 py-3 text-gray-600 hover:text-teal-700 hover:bg-teal-50 rounded-xl font-medium transition"
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Link
-            href="/hotline"
-            onClick={() => setOpen(false)}
-            className="mt-4 block text-center px-4 py-3 bg-rose-100 text-rose-600 font-bold rounded-xl hover:bg-rose-200 transition"
-          >
-            Butuh Bantuan Segera?
-          </Link>
+           {/* TOMBOL HOTLINE (Hanya Desktop) */}
+           <div className="hidden md:block">
+             <Link href="/hotline" className="px-5 py-2.5 bg-gray-900 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:bg-black hover:-translate-y-1 transition-all flex items-center gap-2 text-sm">
+               <HeartHandshake size={18} /> Help
+             </Link>
+           </div>
+
         </div>
+
       </div>
     </nav>
   );

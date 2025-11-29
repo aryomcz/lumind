@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Smile, Meh, Frown, Zap, AlertCircle, Save, CheckCircle2 } from "lucide-react";
+import { Smile, Meh, Frown, Zap, AlertCircle, Save, CheckCircle2, History } from "lucide-react";
 
 export default function MoodPage() {
   const router = useRouter();
@@ -9,34 +9,31 @@ export default function MoodPage() {
   const [note, setNote] = useState("");
   const [isSaved, setIsSaved] = useState(false);
 
-  // Data Mood (Lengkap dengan warna & shadow)
+  // Data Mood (Warna disesuaikan agar pop di background glass)
   const moods = [
-    { id: "happy", label: "Happy", icon: <Smile size={42} />, color: "bg-green-400", shadow: "shadow-green-300", value: 5 },
-    { id: "neutral", label: "Neutral", icon: <Meh size={42} />, color: "bg-yellow-400", shadow: "shadow-yellow-300", value: 3 },
-    { id: "sad", label: "Sad", icon: <Frown size={42} />, color: "bg-blue-400", shadow: "shadow-blue-300", value: 2 },
-    { id: "stressed", label: "Stressed", icon: <Zap size={42} />, color: "bg-purple-400", shadow: "shadow-purple-300", value: 1 },
-    { id: "angry", label: "Angry", icon: <AlertCircle size={42} />, color: "bg-rose-500", shadow: "shadow-rose-300", value: 1 },
+    { id: "happy", label: "Happy", icon: <Smile size={42} />, color: "text-green-500", bg: "bg-green-100" },
+    { id: "neutral", label: "Neutral", icon: <Meh size={42} />, color: "text-yellow-500", bg: "bg-yellow-100" },
+    { id: "sad", label: "Sad", icon: <Frown size={42} />, color: "text-blue-500", bg: "bg-blue-100" },
+    { id: "stressed", label: "Stressed", icon: <Zap size={42} />, color: "text-purple-500", bg: "bg-purple-100" },
+    { id: "angry", label: "Angry", icon: <AlertCircle size={42} />, color: "text-rose-500", bg: "bg-rose-100" },
   ];
 
   const handleSave = () => {
     if (!selectedMood) return;
 
-    // 1. Simpan data ke LocalStorage
     const newEntry = {
       mood: selectedMood.label,
-      value: selectedMood.value,
       note: note,
       date: new Date().toISOString(),
-      color: selectedMood.color 
+      color: selectedMood.color // Simpan untuk referensi warna
     };
 
     const existingData = JSON.parse(localStorage.getItem("moods") || "[]");
     localStorage.setItem("moods", JSON.stringify([...existingData, newEntry]));
 
-    // 2. Tampilkan efek sukses
     setIsSaved(true);
     
-    // 3. Pindah halaman otomatis setelah 1.5 detik
+    // Redirect otomatis
     setTimeout(() => {
       router.push("/mood/analytics");
     }, 1500);
@@ -45,31 +42,33 @@ export default function MoodPage() {
   // Tampilan Sukses (Feedback Visual)
   if (isSaved) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50">
-        <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl text-center animate-bounce-slow border border-white">
-          <div className="mx-auto bg-green-100 w-20 h-20 rounded-full flex items-center justify-center text-green-600 mb-4 shadow-inner">
-            <CheckCircle2 size={48} />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50 animate-gradient">
+        <div className="glass-panel p-10 rounded-[3rem] text-center animate-bounce-slow transform scale-110">
+          <div className="mx-auto bg-green-100 w-24 h-24 rounded-full flex items-center justify-center text-green-600 mb-6 shadow-lg shadow-green-200">
+            <CheckCircle2 size={56} />
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-800">Saved!</h2>
-          <p className="text-gray-500 mt-2">Data mood kamu berhasil disimpan.</p>
+          <h2 className="text-4xl font-black text-gray-800 mb-2">Saved!</h2>
+          <p className="text-gray-500">Data mood kamu berhasil disimpan.</p>
         </div>
       </div>
     );
   }
 
   return (
-    // MAIN CONTAINER: Gradient Background Bergerak
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-teal-100 animate-gradient">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50 animate-gradient relative overflow-hidden">
       
-      {/* PADDING TOP (pt-32) AGAR TIDAK TERTUTUP NAVBAR */}
-      <div className="max-w-4xl mx-auto px-6 pt-32 pb-20">
+      {/* Background Blobs (Biar konsisten sama Home) */}
+      <div className="absolute top-0 -left-20 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob pointer-events-none"></div>
+      <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 pointer-events-none"></div>
+
+      <div className="max-w-4xl mx-auto px-6 pt-36 pb-32 relative z-10">
         
-        {/* HEADER */}
-        <div className="text-center mb-12 space-y-4">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-white/50 text-sm font-semibold text-gray-600 mb-2 shadow-sm">
+        {/* Header */}
+        <div className="text-center mb-12 space-y-4 animate-fade-in-up">
+          <div className="inline-block px-5 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/50 text-sm font-bold text-indigo-600 shadow-sm">
             ✨ Daily Check-in
           </div>
-          <h1 className="text-5xl md:text-6xl font-black text-gray-800 tracking-tight leading-tight">
+          <h1 className="text-5xl md:text-6xl font-black text-gray-800 tracking-tight leading-tight text-glow">
             How are you <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-purple-600">
               feeling right now?
@@ -77,74 +76,77 @@ export default function MoodPage() {
           </h1>
         </div>
 
-        {/* MOOD CARDS GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        {/* GRID MOOD (Pakai class hover-3d & glass-card) */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           {moods.map((m, index) => (
             <button
               key={m.id}
               onClick={() => setSelectedMood(m)}
               style={{ animationDelay: `${index * 100}ms` }}
               className={`
-                relative group p-5 rounded-2xl border transition-all duration-300 ease-out 
-                flex flex-col items-center gap-3 animate-fade-in-up
+                group relative p-6 rounded-[2rem] border transition-all duration-300 ease-out 
+                flex flex-col items-center gap-4 animate-fade-in-up hover-3d
                 ${selectedMood?.id === m.id 
-                  ? "bg-white border-white scale-105 shadow-xl ring-4 ring-white/50 z-10" 
-                  : "bg-white/40 border-white/40 backdrop-blur-md hover:bg-white/70 hover:-translate-y-1 hover:shadow-lg"
+                  ? "bg-white border-teal-200 shadow-xl ring-4 ring-teal-50 scale-105 z-10" 
+                  : "glass-card border-white/40 hover:bg-white/80"
                 }
               `}
             >
               {/* Icon Container */}
               <div 
                 className={`
-                  p-3 rounded-xl text-white transition-all duration-300 shadow-md
-                  ${selectedMood?.id === m.id ? m.color : "bg-gray-400/30 group-hover:" + m.color}
-                  ${selectedMood?.id === m.id ? m.shadow : ""}
+                  p-4 rounded-2xl transition-all duration-300 shadow-sm
+                  ${selectedMood?.id === m.id ? m.bg + " " + m.color : "bg-white/50 text-gray-400 group-hover:" + m.color + " group-hover:" + m.bg}
                 `}
               >
-                <div className={selectedMood?.id === m.id ? "animate-bounce" : ""}>
+                <div className={selectedMood?.id === m.id ? "animate-bounce" : "group-hover:scale-110 transition-transform"}>
                   {m.icon}
                 </div>
               </div>
 
               {/* Label */}
-              <span className={`font-bold text-sm ${selectedMood?.id === m.id ? "text-gray-800" : "text-gray-600 group-hover:text-gray-800"}`}>
+              <span className={`font-bold text-sm ${selectedMood?.id === m.id ? "text-gray-800" : "text-gray-500 group-hover:text-gray-800"}`}>
                 {m.label}
               </span>
             </button>
           ))}
         </div>
 
-        {/* AREA INPUT JURNAL (Slide Up Animation) */}
-        {selectedMood && (
-          <div className="animate-slide-up transition-all duration-500 ease-out">
-            <div className="bg-white/70 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/60">
-              
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-3 h-8 rounded-full ${selectedMood.color}`}></div>
-                <h3 className="text-lg font-bold text-gray-700">
-                  Why are you feeling {selectedMood.label}?
-                </h3>
-              </div>
-
-              {/* Textarea Cantik */}
-              <textarea
-                className="w-full p-4 bg-white/50 border border-white/50 rounded-2xl focus:ring-2 focus:ring-teal-400 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-gray-700 shadow-inner resize-none"
-                rows="3"
-                placeholder="Ceritakan sedikit harimu... (Opsional)"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              ></textarea>
-
-              <button 
-                onClick={handleSave}
-                className="w-full mt-6 bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group"
-              >
-                <Save size={20} className="group-hover:scale-110 transition-transform"/>
-                Save & Continue
-              </button>
+        {/* AREA INPUT JURNAL (Muncul dengan animasi halus) */}
+        <div className={`transition-all duration-500 ease-out overflow-hidden ${selectedMood ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"}`}>
+          <div className="glass-panel p-8 rounded-[2.5rem] shadow-xl relative">
+            
+            <div className="flex items-center gap-3 mb-6">
+              <div className={`w-1.5 h-8 rounded-full ${selectedMood?.color?.replace("text-", "bg-") || "bg-gray-300"}`}></div>
+              <h3 className="text-xl font-bold text-gray-800">
+                Why are you feeling {selectedMood?.label}?
+              </h3>
             </div>
+
+            <textarea
+              className="w-full p-5 bg-white/50 border border-white/60 rounded-2xl focus:ring-4 focus:ring-teal-100 focus:border-teal-300 outline-none transition-all placeholder:text-gray-400 text-gray-700 shadow-inner resize-none text-lg"
+              rows="3"
+              placeholder="Ceritakan sedikit harimu... (Opsional)"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            ></textarea>
+
+            <button 
+              onClick={handleSave}
+              className="w-full mt-6 bg-gray-900 text-white py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-2xl hover:bg-black hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group"
+            >
+              <Save size={20} className="group-hover:scale-110 transition-transform"/>
+              Save & Continue
+            </button>
           </div>
-        )}
+        </div>
+
+        {/* Link History Kecil di Bawah */}
+        <div className="text-center mt-12 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+           <button onClick={() => router.push('/mood/analytics')} className="text-gray-500 hover:text-teal-600 font-semibold text-sm flex items-center justify-center gap-2 mx-auto transition-colors">
+              <History size={16}/> Lihat Riwayat Mood Saya
+           </button>
+        </div>
 
       </div>
     </div>
