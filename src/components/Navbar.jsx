@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Smile, HeartHandshake } from "lucide-react";
 import StreakCounter from "@/components/StreakCounter";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -12,6 +14,8 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (pathname === "/void") return null;
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -21,23 +25,29 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-      scrolled 
-      ? "bg-white/70 backdrop-blur-md shadow-sm py-2" 
-      : "bg-transparent py-4"
-    }`}>
+    <nav 
+      role="navigation"
+      className={`fixed top-0 w-full z-40 transition-all duration-300 ${
+        scrolled 
+        ? "bg-white/70 backdrop-blur-md shadow-sm py-2" 
+        : "bg-transparent py-4"
+      }`}
+    >
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         
         {/* KIRI: LOGO */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link 
+          href="/" 
+          className="flex items-center gap-2 group"
+          aria-label="Lumind Homepage"
+        >
           <div className="bg-gradient-to-tr from-teal-400 to-indigo-500 p-2 rounded-xl text-white group-hover:rotate-12 transition-transform shadow-lg shadow-teal-200">
             <Smile size={24} strokeWidth={2.5} />
           </div>
           
-          {/* PERBAIKAN DI SINI: Saya hapus 'hidden sm:block' */}
-          {/* Saya ubah ukurannya: 'text-xl' di HP, 'text-2xl' di Laptop */}
+          {/* GANTI NAMA JADI LUMIND */}
           <span className="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600 tracking-tight block">
-            MindEase
+            LuMind
           </span>
         </Link>
 
@@ -47,6 +57,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              aria-label={`Pergi ke halaman ${link.name}`}
               className="px-5 py-2 text-gray-600 font-bold text-sm rounded-full hover:bg-white hover:text-teal-600 hover:shadow-md transition-all duration-300"
             >
               {link.name}
@@ -56,18 +67,22 @@ export default function Navbar() {
 
         {/* KANAN: STREAK & HOTLINE */}
         <div className="flex items-center gap-3">
-           
-           {/* STREAK COUNTER */}
-           <div className="scale-90 sm:scale-100">
-              <StreakCounter />
-           </div>
+            
+            {/* STREAK COUNTER */}
+            <div className="scale-90 sm:scale-100">
+               <StreakCounter />
+            </div>
 
-           {/* TOMBOL HOTLINE (Hanya Desktop) */}
-           <div className="hidden md:block">
-             <Link href="/hotline" className="px-5 py-2.5 bg-gray-900 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:bg-black hover:-translate-y-1 transition-all flex items-center gap-2 text-sm">
-               <HeartHandshake size={18} /> Help
-             </Link>
-           </div>
+            {/* TOMBOL HOTLINE (Hanya Desktop) */}
+            <div className="hidden md:block">
+              <Link 
+                href="/hotline" 
+                aria-label="Pusat Bantuan Darurat"
+                className="px-5 py-2.5 bg-gray-900 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:bg-black hover:-translate-y-1 transition-all flex items-center gap-2 text-sm"
+              >
+                <HeartHandshake size={18} /> Help
+              </Link>
+            </div>
 
         </div>
 

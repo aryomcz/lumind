@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation"; // Hanya satu kali import!
 import { Home, Smile, Grid, BookOpen, Phone } from "lucide-react";
 
 export default function MobileDock() {
   const pathname = usePathname();
+
+  // Jika di halaman Void, jangan tampilkan dock
+  if (pathname === "/void") return null;
 
   const links = [
     { href: "/", icon: <Home size={22} />, label: "Home" },
@@ -17,7 +20,11 @@ export default function MobileDock() {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 md:hidden w-[90%] max-w-sm">
       {/* Container Kaca Melayang */}
-      <nav className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl px-6 py-4 flex justify-between items-center relative overflow-hidden">
+      <nav 
+        role="navigation"
+        aria-label="Mobile Navigation"
+        className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl px-6 py-4 flex justify-between items-center relative overflow-hidden"
+      >
         
         {/* Efek Kilau Background */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full h-full -skew-x-12 opacity-50 animate-pulse-slow pointer-events-none"></div>
@@ -28,6 +35,7 @@ export default function MobileDock() {
             <Link 
               key={link.label} 
               href={link.href}
+              aria-label={link.label}
               className={`relative flex flex-col items-center gap-1 transition-all duration-300 ${
                 isActive ? "text-teal-600 -translate-y-1" : "text-gray-400 hover:text-gray-600"
               }`}

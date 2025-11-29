@@ -6,10 +6,17 @@ import SoundPlayer from "@/components/SoundPlayer";
 import LoadingScreen from "@/components/LoadingScreen";
 import WelcomeModal from "@/components/WelcomeModal";
 import { UserProvider } from "@/context/UserContext";
+import OfflineIndicator from "@/components/OfflineIndicator";
 
 export const metadata = {
-  title: "MindEase",
-  description: "Your Mental Wellness Companion",
+  title: "Lumind - Your Mental Health Companion",
+  description: "A safe space to track mood, breathe, and find peace.",
+  manifest: "/manifest.json", 
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/icon-192.png', 
+  },
+  themeColor: "#f0fdfa", 
 };
 
 export default function RootLayout({ children }) {
@@ -24,6 +31,7 @@ export default function RootLayout({ children }) {
             <main className="flex-1">{children}</main>
             <SoundPlayer />
             <MobileDock />
+            <OfflineIndicator />
             <Footer />
           </UserProvider>
         </div>

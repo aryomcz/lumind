@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
 import { Smile, Instagram, Twitter, Github, Heart } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname(); 
   const currentYear = new Date().getFullYear();
+
+  if (pathname === "/void") return null;
 
   return (
     <footer className="relative mt-32 border-t border-white/40 bg-white/60 backdrop-blur-xl">

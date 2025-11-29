@@ -54,30 +54,31 @@ export default function SoundPlayer() {
   }, [volume]);
 
   return (
-    // --- PERUBAHAN POSISI DI SINI ---
-    // Mobile: top-20 right-4 (Di atas, bawah navbar)
-    // Desktop: bottom-6 right-6 (Di bawah pojok)
     <div className={`
         fixed z-[60] flex flex-col items-end transition-all duration-500
-         right-4 top-1/2 
+        top-20 right-4 
         md:top-auto md:bottom-6 md:right-6
     `}>
       
       <audio ref={audioRef} loop />
 
-      {/* PANEL KONTROL (Popup) */}
+      {/* PANEL KONTROL */}
       <div 
         className={`
           mb-4 bg-white/80 backdrop-blur-xl border border-white/60 
           p-5 rounded-2xl shadow-2xl transition-all duration-300 origin-top-right md:origin-bottom-right
-          ${isOpen ? "scale-100 opacity-100 translate-y-0 block" : "scale-0 opacity-0 -translate-y-10 md:translate-y-10 pointer-events-none hidden"}
+          ${isOpen ? "scale-100 opacity-100 translate-y-0" : "scale-0 opacity-0 -translate-y-10 md:translate-y-10 pointer-events-none"}
         `}
       >
         <div className="flex justify-between items-center mb-4 min-w-[200px]">
             <h3 className="text-sm font-bold text-gray-700 flex items-center gap-2">
                 <Music size={16} className="text-teal-500"/> Soundscapes
             </h3>
-            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-rose-500 cursor-pointer">
+            <button 
+                onClick={() => setIsOpen(false)} 
+                className="text-gray-400 hover:text-rose-500"
+                aria-label="Tutup panel suara"
+            >
                 <X size={16} />
             </button>
         </div>
@@ -87,8 +88,9 @@ export default function SoundPlayer() {
                 <button
                     key={sound.id}
                     onClick={() => setActiveSound(activeSound === sound.id ? null : sound.id)}
+                    aria-label={`Putar suara ${sound.label}`}
                     className={`
-                        flex flex-col items-center justify-center p-3 rounded-xl transition-all cursor-pointer
+                        flex flex-col items-center justify-center p-3 rounded-xl transition-all
                         ${activeSound === sound.id 
                             ? "bg-teal-500 text-white shadow-lg scale-105" 
                             : "bg-white/50 border border-white/50 text-gray-500 hover:bg-teal-50 hover:text-teal-600"
@@ -118,17 +120,19 @@ export default function SoundPlayer() {
                 step="0.01"
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
+                aria-label="Atur volume"
                 className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
             />
         </div>
       </div>
 
-      {/* TOMBOL PEMICU (Music Button) */}
+      {/* TOMBOL PEMICU */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "Tutup menu suara" : "Buka menu suara latar"}
         className={`
             p-3 md:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95
-            flex items-center justify-center relative border border-white/40 backdrop-blur-md cursor-pointer
+            flex items-center justify-center relative border border-white/40 backdrop-blur-md
             ${isOpen || activeSound 
                 ? "bg-teal-500 text-white rotate-0 shadow-teal-200" 
                 : "bg-white/70 text-teal-600 hover:bg-white"
@@ -145,7 +149,7 @@ export default function SoundPlayer() {
             <Music size={20} />
         )}
 
-        {/* Indikator Aktif (Titik Hijau) */}
+        {/* Indikator Aktif */}
         {activeSound && (
             <span className="absolute -top-1 -right-1 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>

@@ -1,15 +1,21 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Smile, Meh, Frown, Zap, AlertCircle, Save, CheckCircle2, History } from "lucide-react";
+import Link from "next/link";
+import { 
+  Smile, Meh, Frown, Zap, AlertCircle, 
+  Save, CheckCircle2, History, ArrowRight 
+} from "lucide-react";
 
 export default function MoodPage() {
   const router = useRouter();
   const [selectedMood, setSelectedMood] = useState(null);
   const [note, setNote] = useState("");
-  const [isSaved, setIsSaved] = useState(false);
+  
+  // State untuk mengatur alur tampilan: 'input' -> 'saving' -> 'recommendation'
+  const [step, setStep] = useState("input"); 
 
-  // Data Mood (Warna disesuaikan agar pop di background glass)
+  // Data Mood
   const moods = [
     { id: "happy", label: "Happy", icon: <Smile size={42} />, color: "text-green-500", bg: "bg-green-100" },
     { id: "neutral", label: "Neutral", icon: <Meh size={42} />, color: "text-yellow-500", bg: "bg-yellow-100" },
@@ -18,6 +24,41 @@ export default function MoodPage() {
     { id: "angry", label: "Angry", icon: <AlertCircle size={42} />, color: "text-rose-500", bg: "bg-rose-100" },
   ];
 
+  // LOGIKA REKOMENDASI (Sesuai Toolbox baru)
+  const getRecommendation = (moodLabel) => {
+    switch (moodLabel) {
+      case "Stressed":
+      case "Angry":
+        return {
+          text: "Pikiranmu sedang panas.",
+          action: "Dinginkan dengan Latihan Napas.",
+          link: "/breathing", // Direct link ke Breathing Page
+          btnColor: "bg-teal-600 hover:bg-teal-700"
+        };
+      case "Sad":
+        return {
+          text: "Jangan dipendam sendirian.",
+          action: "Buang bebanmu di The Void.",
+          link: "/void",
+          btnColor: "bg-slate-800 hover:bg-black"
+        };
+      case "Happy":
+        return {
+          text: "Energi kamu positif banget!",
+          action: "Simpan momen ini di Time Capsule?",
+          link: "/toolbox?tool=letter", // Deep link ke Tab Letter
+          btnColor: "bg-rose-500 hover:bg-rose-600"
+        };
+      default: // Neutral
+        return {
+          text: "Hari yang tenang.",
+          action: "Cek kualitas tidurmu yuk?",
+          link: "/toolbox?tool=sleep", // Deep link ke Tab Sleep
+          btnColor: "bg-indigo-600 hover:bg-indigo-700"
+        };
+    }
+  };
+
   const handleSave = () => {
     if (!selectedMood) return;
 
@@ -25,22 +66,23 @@ export default function MoodPage() {
       mood: selectedMood.label,
       note: note,
       date: new Date().toISOString(),
-      color: selectedMood.color // Simpan untuk referensi warna
+      color: selectedMood.color
     };
 
     const existingData = JSON.parse(localStorage.getItem("moods") || "[]");
     localStorage.setItem("moods", JSON.stringify([...existingData, newEntry]));
 
-    setIsSaved(true);
+    // Ganti Step ke Saving (Animasi Centang)
+    setStep("saving");
 
-    // Redirect otomatis
+    // Setelah 1.5 detik, pindah ke Rekomendasi (Bukan redirect)
     setTimeout(() => {
-      router.push("/mood/analytics");
+      setStep("recommendation");
     }, 1500);
   };
 
-  // Tampilan Sukses (Feedback Visual)
-  if (isSaved) {
+  // --- TAMPILAN 2: SAVING SUCCESS (Feedback Visual) ---
+  if (step === "saving") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50 animate-gradient">
         <div className="glass-panel p-10 rounded-[3rem] text-center animate-bounce-slow transform scale-110">
@@ -54,10 +96,48 @@ export default function MoodPage() {
     );
   }
 
+  // --- TAMPILAN 3: RECOMMENDATION MODAL (Smart Direct) ---
+  if (step === "recommendation") {
+    const rec = getRecommendation(selectedMood.label);
+    
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50 animate-gradient p-6">
+        
+        <div className="glass-panel p-8 md:p-12 rounded-[3rem] max-w-lg w-full text-center shadow-2xl border-2 border-white/60 animate-fade-in-up">
+           
+           <h3 className="text-xl font-bold text-gray-600 mb-2">{rec.text}</h3>
+           <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-indigo-600 mb-8 leading-tight">
+             {rec.action}
+           </h1>
+
+           <div className="space-y-4">
+              {/* Tombol Utama (Ikuti Saran) */}
+              <Link 
+                href={rec.link}
+                className={`w-full py-4 text-white rounded-2xl font-bold text-lg shadow-xl shadow-gray-200 transition-all transform hover:scale-105 flex items-center justify-center gap-2 ${rec.btnColor}`}
+              >
+                Mulai Sekarang <ArrowRight size={20}/>
+              </Link>
+
+              {/* Tombol Sekunder (Lihat History) */}
+              <button 
+                onClick={() => router.push("/mood/analytics")}
+                className="w-full py-4 bg-white/50 hover:bg-white text-gray-600 rounded-2xl font-bold border border-white/60 transition-all"
+              >
+                Tidak, lihat riwayat saja
+              </button>
+           </div>
+
+        </div>
+      </div>
+    );
+  }
+
+  // --- TAMPILAN 1: INPUT MOOD (Default) ---
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-teal-50 animate-gradient relative overflow-hidden">
 
-      {/* Background Blobs (Biar konsisten sama Home) */}
+      {/* Background Blobs */}
       <div className="absolute top-0 -left-20 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob pointer-events-none"></div>
       <div className="absolute bottom-0 -right-20 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 pointer-events-none"></div>
 
@@ -76,7 +156,7 @@ export default function MoodPage() {
           </h1>
         </div>
 
-        {/* GRID MOOD (Pakai class hover-3d & glass-card) */}
+        {/* GRID MOOD */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
           {moods.map((m, index) => (
             <button
@@ -92,7 +172,6 @@ export default function MoodPage() {
                 }
               `}
             >
-              {/* Icon Container */}
               <div
                 className={`
                   p-4 rounded-2xl transition-all duration-300 shadow-sm
@@ -103,8 +182,6 @@ export default function MoodPage() {
                   {m.icon}
                 </div>
               </div>
-
-              {/* Label */}
               <span className={`font-bold text-sm ${selectedMood?.id === m.id ? "text-gray-800" : "text-gray-500 group-hover:text-gray-800"}`}>
                 {m.label}
               </span>
@@ -112,7 +189,7 @@ export default function MoodPage() {
           ))}
         </div>
 
-        {/* AREA INPUT JURNAL (Muncul dengan animasi halus) */}
+        {/* AREA INPUT JURNAL */}
         <div className={`transition-all duration-500 ease-out overflow-hidden ${selectedMood ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"}`}>
           <div className="glass-panel p-8 rounded-[2.5rem] shadow-xl relative">
 
@@ -141,7 +218,7 @@ export default function MoodPage() {
           </div>
         </div>
 
-        {/* Link History Kecil di Bawah */}
+        {/* Link History Kecil */}
         <div className="text-center mt-12 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
           <button onClick={() => router.push('/mood/analytics')} className="text-gray-500 hover:text-teal-600 font-semibold text-sm flex items-center justify-center gap-2 mx-auto transition-colors cursor-pointer">
             <History size={16} /> Lihat Riwayat Mood Saya
