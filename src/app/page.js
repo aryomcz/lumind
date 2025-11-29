@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ArrowRight, Wind, Smile, BookOpen, Heart, Sun, CloudRain } from "lucide-react";
 import QuoteCard from "@/components/QuoteCard"; 
 import PopItGame from "@/components/PopItGame";
+import SleepCalculator from "@/components/SleepCalculator";
+import GroundingExercise from "@/components/GroundingExercise";
+import FutureLetter from "@/components/FutureLetter";
 
 export default function Home() {
   return (
@@ -114,6 +117,32 @@ export default function Home() {
           />
         </div>
 
+        {/* --- FITUR BARU: GROUNDING EXERCISE --- */}
+<section className="mt-24 mb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+  
+  {/* Komponen di Kiri */}
+  <div className="order-1">
+    <GroundingExercise />
+  </div>
+
+  {/* Deskripsi di Kanan */}
+  <div className="order-2 space-y-4 animate-fade-in-up">
+    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-600 text-xs font-bold uppercase tracking-wider">
+       🧠 Anti-Anxiety
+    </div>
+    <h2 className="text-3xl md:text-4xl font-black text-gray-800">
+      Meredakan Cemas<br/> dalam 5 Langkah.
+    </h2>
+    <p className="text-gray-600 leading-relaxed text-lg">
+      Saat panik menyerang, otak kita kehilangan fokus. Teknik <strong>5-4-3-2-1</strong> memaksa otak untuk kembali ke realita (grounding) dengan mengaktifkan kelima panca indera.
+    </p>
+    <div className="p-4 bg-white/50 border border-purple-100 rounded-2xl text-sm text-gray-500 italic">
+      "Teknik ini adalah pertolongan pertama psikologis yang paling mudah dan efektif dilakukan di mana saja."
+    </div>
+  </div>
+
+</section>
+
         {/* --- BAGIAN BARU: FUN ZONE --- */}
       <section className="mt-20 mb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
@@ -136,6 +165,46 @@ export default function Home() {
         </div>
 
       </section>
+
+      
+
+      {/* --- FITUR BARU: SLEEP CALCULATOR --- */}
+<section className="mt-24 mb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+  
+  {/* Deskripsi di Kiri */}
+  <div className="order-2 lg:order-1 space-y-4 animate-fade-in-up">
+    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-wider">
+       🌙 Better Sleep
+    </div>
+    <h2 className="text-3xl md:text-4xl font-black text-gray-800">
+      Stop Begadang,<br/> Bangun Lebih Segar.
+    </h2>
+    <p className="text-gray-600 leading-relaxed text-lg">
+      Tidur bukan cuma soal durasi, tapi soal timing. Gunakan kalkulator ini untuk menemukan waktu tidur yang pas agar kamu tidak bangun dengan kepala pusing (Sleep Inertia).
+    </p>
+    <ul className="space-y-3 mt-4 text-gray-600">
+      <li className="flex items-center gap-2">
+        <span className="bg-green-100 text-green-600 p-1 rounded-full text-xs">✓</span>
+        Menghindari bangun di tengah Deep Sleep
+      </li>
+      <li className="flex items-center gap-2">
+        <span className="bg-green-100 text-green-600 p-1 rounded-full text-xs">✓</span>
+        Memaksimalkan pemulihan otak
+      </li>
+    </ul>
+  </div>
+
+  {/* Kalkulator di Kanan */}
+  <div className="order-1 lg:order-2">
+    <SleepCalculator />
+  </div>
+
+</section>
+
+{/* --- FITUR BARU: FUTURE LETTER --- */}
+<section className="mt-24 mb-20 animate-fade-in-up">
+  <FutureLetter />
+</section>
 
         {/* Quote Section */}
         <div className="mt-20">
