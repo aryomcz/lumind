@@ -72,7 +72,7 @@ function SocialIcon({ icon, href, color }) {
   return (
     <a 
       href={href} 
-      className={`p-2.5 bg-white border border-gray-100 text-gray-400 rounded-full shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${color}`}
+      className={`p-2.5 bg-white border border-gray-100 !text-gray-400 rounded-full shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${color}`}
     >
       {icon}
     </a>
