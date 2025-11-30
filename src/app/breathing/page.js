@@ -122,7 +122,7 @@ export default function Breathing() {
       {/* VISUALISASI LINGKARAN */}
       <div className="relative flex items-center justify-center w-full max-w-md h-80 mb-12">
         {isActive && (
-          <div className={`absolute w-64 h-64 rounded-full opacity-30 animate-ping ${phase === 'Inhale' ? 'bg-teal-300' : 'bg-rose-300'}`}></div>
+          <div className={`absolute w-64 h-64 rounded-full opacity-30 animate-ping ${phase === 'Inhale' ? '!bg-teal-300' : '!bg-rose-300'}`}></div>
         )}
 
         <div
@@ -134,7 +134,7 @@ export default function Breathing() {
           `}
         >
           {/* Paksa teks dalam bola agar tetap terlihat kontras dengan warna bola */}
-          <span className={`text-3xl font-black tracking-widest drop-shadow-sm ${phase === "Ready" ? "text-gray-500" : "text-white"}`}>{config.text}</span>
+          <span className={`text-3xl font-black tracking-widest drop-shadow-sm ${phase === "Ready" ? "!text-gray-500" : "text-white"}`}>{config.text}</span>
           {phase !== "Ready" && <Wind className="mt-2 opacity-60 animate-bounce text-white" size={24} />}
         </div>
       </div>
@@ -161,7 +161,7 @@ export default function Breathing() {
 
           <div className="w-16 text-center">
             <span className="text-2xl font-mono font-bold text-gray-700">
-              00:{`timeLeft < 10 ? 0${timeLeft} : timeLeft`}
+              00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}
             </span>
           </div>
 
