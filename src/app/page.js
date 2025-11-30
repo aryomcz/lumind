@@ -217,13 +217,7 @@ export default function Home() {
           </MotionWrapper>
         </section>
 
-        {/* ================= ARTICLES PREVIEW (PERBAIKAN LAYOUT DISINI) ================= */}
-        {/*
-           Perhatikan: Saya membuat struktur Header di sini agar responsif.
-           Jika ArticlesCarousel kamu sudah punya header di dalamnya,
-           sebaiknya header di dalam component itu di-hide atau dihapus,
-           dan gunakan yang ini agar rapi.
-        */}
+        {/* ================= ARTICLES PREVIEW ================= */}
         <section className="mb-16 md:mb-24">
           <MotionWrapper animation="fadeInUp" duration={0.8}>
             {/* Header Flex: Column di HP, Row di Tablet ke atas */}

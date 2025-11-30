@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Quote } from "lucide-react";
 
 const quotesData = [
@@ -12,70 +12,103 @@ const quotesData = [
   { text: "Small progress is still progress.", author: "Motivation" },
   { text: "Tough times never last, but tough people do.", author: "Robert H. Schuller" },
   { text: "Be gentle with yourself.", author: "Unknown" },
-  { text: "You don’t have to control your thoughts. You just have to stop letting them control you.", author: "Dan Millman" }
+  { text: "Stop letting your thoughts control you.", author: "Dan Millman" }
 ];
 
 export default function QuoteCard() {
-  const [currentQuote, setCurrentQuote] = useState(null);
+  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const randomizeQuote = () => {
-    setIsAnimating(true);
-    
-    setTimeout(() => {
-      let newIndex;
-      do {
-        newIndex = Math.floor(Math.random() * quotesData.length);
-      } while (currentQuote && quotesData[newIndex].text === currentQuote.text && quotesData.length > 1);
-      
-      setCurrentQuote(quotesData[newIndex]);
-      setIsAnimating(false);
-    }, 500); 
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  // Swipe
+  const onTouchStart = (e) => (touchStartX.current = e.changedTouches[0].clientX);
+  const onTouchEnd = (e) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    const diff = touchEndX.current - touchStartX.current;
+    if (diff > 100) prevQuote();
+    if (diff < -100) nextQuote();
   };
 
+  // TYPEWRITER EFFECT (SAFE VERSION — NO UNDEFINED)
   useEffect(() => {
-    randomizeQuote();
-    const intervalId = setInterval(() => {
-      randomizeQuote();
-    }, 30000); 
-    return () => clearInterval(intervalId);
-  }, []);
+    const quote = quotesData[quoteIndex].text;
+    let i = 0;
 
-  if (!currentQuote) {
-    return <div className="bg-white p-8 rounded-3xl h-40 animate-pulse shadow-sm border border-gray-100"></div>;
-  }
+    setDisplayedText("");
+
+    const typer = setInterval(() => {
+      i++;
+      setDisplayedText(quote.substring(0, i)); // aman 100%
+      if (i >= quote.length) clearInterval(typer);
+    }, 30);
+
+    return () => clearInterval(typer);
+  }, [quoteIndex]);
+
+  const nextQuote = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setQuoteIndex((quoteIndex + 1) % quotesData.length);
+      setIsAnimating(false);
+    }, 180);
+  };
+
+  const prevQuote = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setQuoteIndex(quoteIndex === 0 ? quotesData.length - 1 : quoteIndex - 1);
+      setIsAnimating(false);
+    }, 180);
+  };
+
+  const current = quotesData[quoteIndex];
 
   return (
-    <div className="relative group cursor-default">
-      {/* Efek Layer Belakang */}
-      <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-indigo-500 rounded-3xl transform rotate-1 opacity-20 group-hover:rotate-2 transition-transform duration-500"></div>
+    <div
+      className="relative group cursor-pointer select-none"
+      onClick={nextQuote}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Floating sparkles */}
+      <div className="absolute -top-3 right-6 text-teal-400 text-xl animate-ping opacity-40">✦</div>
+      <div className="absolute bottom-3 -left-3 text-purple-300 animate-float opacity-50">✧</div>
 
-      {/* Kartu Utama - Padding Responsive (p-6 di HP, p-12 di Laptop) */}
-      <div className="relative bg-white p-6 md:p-12 rounded-3xl shadow-xl border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-1 overflow-hidden">
-        
-        {/* Ikon Kutipan Besar (Hiasan) - Ukuran Responsive */}
-        <div className="absolute top-2 left-4 md:top-6 md:left-8 text-indigo-100 opacity-50">
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-teal-300 to-indigo-400 opacity-20 blur-xl rounded-3xl group-hover:opacity-30 transition-all"></div>
+
+      {/* Card */}
+      <div
+        className={`relative bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center 
+        transition-all duration-300 overflow-hidden
+        ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+      >
+        {/* Decorative quote icon */}
+        <div className="absolute top-4 left-6 text-indigo-100 opacity-50 pointer-events-none">
           <Quote className="transform -scale-x-100 w-12 h-12 md:w-20 md:h-20" />
         </div>
 
-        {/* Konten Teks */}
-        <div className={`transition-all duration-500 ease-in-out z-10 ${isAnimating ? "opacity-0 translate-y-4 blur-sm" : "opacity-100 translate-y-0 blur-0"}`}>
-          
-          {/* Teks Quote - Ukuran Responsive (text-lg di HP, text-3xl di Laptop) */}
-          <p className="text-lg md:text-3xl font-serif italic !text-gray-900 leading-relaxed mb-4 md:mb-6 relative">
-            "{currentQuote.text}"
-          </p>
-          
-          <div className="flex items-center justify-center gap-3">
-            <span className="w-4 h-[2px] md:w-8 bg-teal-400 rounded-full"></span>
-            <p className="text-xs md:text-sm font-bold !text-gray-500 uppercase tracking-widest">
-              {currentQuote.author}
-            </p>
-            <span className="w-4 h-[2px] md:w-8 bg-teal-400 rounded-full"></span>
-          </div>
+        {/* QUOTE */}
+        <p className="text-xl md:text-3xl font-serif italic !text-gray-900 leading-relaxed mb-4">
+          “{displayedText}”
+        </p>
 
+        {/* AUTHOR */}
+        <div className="flex items-center justify-center gap-3">
+          <span className="w-6 h-[2px] md:w-10 bg-teal-400 rounded-full"></span>
+          <p className="text-xs md:text-sm font-bold !text-gray-500 uppercase tracking-widest">
+            {current.author}
+          </p>
+          <span className="w-6 h-[2px] md:w-10 bg-teal-400 rounded-full"></span>
         </div>
 
+        {/* Hint */}
+        <p className="text-gray-400 text-xs mt-5 md:hidden italic">
+          Swipe untuk ganti quote →
+        </p>
       </div>
     </div>
   );
