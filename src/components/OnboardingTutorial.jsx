@@ -106,10 +106,7 @@ export default function OnboardingTutorial() {
               }}
             ></div>
             
-            {/* Arrow pointing ke highlight */}
-            <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 animate-bounce">
-              <div className="text-white text-4xl drop-shadow-lg">👇</div>
-            </div>
+            
           </>
         )}
       </div>
