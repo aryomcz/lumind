@@ -23,10 +23,9 @@ export default function ArticlesPage() {
   });
 
   return (
-    // PERBAIKAN: HAPUS BG GRADIENT, GUNAKAN MIN-H-SCREEN TRANSPARAN
     <div className="w-full relative overflow-hidden min-h-screen text-gray-800">
 
-      {/* Decor (Hanya hiasan di mode default) */}
+      {/* Decor */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white/40 to-transparent pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto px-6 pt-36 pb-32 relative z-10">
@@ -45,7 +44,7 @@ export default function ArticlesPage() {
             </span>
           </h1>
 
-          {/* SEARCH BAR (Floating Capsule) */}
+          {/* SEARCH BAR */}
           <div className="relative max-w-lg mx-auto group">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-400 group-focus-within:text-teal-500 transition-colors">
               <Search size={22} />

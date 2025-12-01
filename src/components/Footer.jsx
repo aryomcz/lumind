@@ -13,7 +13,6 @@ export default function Footer() {
   return (
     <footer className="relative mt-32 border-t border-white/40 bg-white/60 backdrop-blur-xl">
       
-      {/* Garis Neon Tipis di Atas */}
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-teal-400 to-transparent opacity-50"></div>
 
       <div className="max-w-6xl mx-auto px-6 py-10">

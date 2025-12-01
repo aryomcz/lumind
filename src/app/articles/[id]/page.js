@@ -19,10 +19,10 @@ export default function ArticleDetail({ params }) {
     }
 
     return (
-        // 1. CONTAINER UTAMA: Hapus bg-gradient agar transparan mengikuti ambience
+        // 1. CONTAINER UTAMA
         <div className="w-full relative overflow-hidden min-h-screen">
 
-            {/* Decor (Hanya hiasan di mode default) */}
+            {/* Decor */}
             <div className="fixed top-0 left-0 w-full h-[60vh] bg-gradient-to-b from-white/80 to-transparent pointer-events-none"></div>
 
             <div className="max-w-4xl mx-auto px-6 pt-32 pb-32 relative z-10">
@@ -56,7 +56,6 @@ export default function ArticleDetail({ params }) {
                 </div>
 
                 {/* KONTEN UTAMA (GLASS PANEL) */}
-                {/* glass-panel ini akan otomatis jadi gelap transparan saat mode hujan/hutan */}
                 <article className="glass-panel p-8 md:p-12 rounded-[3rem] animate-fade-in-up shadow-2xl border border-white/60">
 
                     {/* Article Header */}
@@ -73,7 +72,6 @@ export default function ArticleDetail({ params }) {
                             </span>
                         </div>
 
-                        {/* Judul: text-gray-900 akan otomatis jadi putih di mode gelap */}
                         <h1 className="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-6">
                             {article.title}
                         </h1>

@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function VoidLayout({ children }) {
   return (
-    // Tidak ada Navbar atau Footer di sini, hanya konten halaman.
+    // Tidak ada Navbar atau Footer
     <section className="min-h-screen bg-black text-white overflow-hidden relative">
       {children}
     </section>

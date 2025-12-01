@@ -14,7 +14,6 @@ export default function GroundingExercise() {
       icon: <Eye size={48} className="text-teal-500" />,
       color: "bg-teal-50 border-teal-200 text-teal-800"
     },
-    // ... (data lain tetap sama)
     {
       id: 2,
       number: "4",
@@ -53,7 +52,6 @@ export default function GroundingExercise() {
   const handleReset = () => setStep(0);
 
   return (
-    // PERBAIKAN: Hapus fixed height, ganti min-h-full agar fleksibel
     <div className="bg-white/70 backdrop-blur-xl p-8 rounded-[2rem] border border-white/60 shadow-xl w-full mx-auto relative overflow-visible transition-all hover:scale-[1.01]">
       
       {/* STEP 0: INTRO */}

@@ -18,7 +18,6 @@ export default function HotlinePage() {
       ext: "Ext. 8", 
       icon: <Siren size={28} />, 
       color: "bg-rose-500", 
-      // Tambahan: Warna teks khusus untuk tombol agar serasi
       btnText: "text-rose-600", 
       glow: "shadow-rose-500/40" 
     },
@@ -28,7 +27,6 @@ export default function HotlinePage() {
       ext: "", 
       icon: <ShieldCheck size={28} />, 
       color: "bg-red-600", 
-      // Tambahan: Warna teks khusus untuk tombol agar serasi
       btnText: "text-red-700", 
       glow: "shadow-red-600/40" 
     },

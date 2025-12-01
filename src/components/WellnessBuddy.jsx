@@ -16,7 +16,7 @@ export default function WellnessBuddy() {
   const [progress, setProgress] = useState(0);
   const [streak, setStreak] = useState(0);
 
-  // *** Load + Reset Goals saat ganti hari ***
+  // Load + Reset Goals saat ganti hari
   useEffect(() => {
     const storedTasks = localStorage.getItem("buddy_tasks");
     const storedStreak = localStorage.getItem("buddy_streak");
@@ -36,7 +36,7 @@ export default function WellnessBuddy() {
     }
   }, []);
 
-  // *** Update progress + finish animation ***
+  // Update progress + finish animation
   useEffect(() => {
     localStorage.setItem("buddy_tasks", JSON.stringify(tasks));
 
@@ -54,14 +54,13 @@ export default function WellnessBuddy() {
     localStorage.setItem("buddy_streak", newStreak);
   };
 
-  // *** No Undo ***
   const toggleTask = (id) => {
     setTasks(tasks.map(t =>
       t.id === id ? { ...t, done: true } : t
     ));
   };
 
-  // *** Mascot Logic ***
+  // Mascot Logic
   const getMascotState = () => {
     if (progress === 0)
       return {

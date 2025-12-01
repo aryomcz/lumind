@@ -32,7 +32,6 @@ export default function QuoteCard() {
     if (diff < -100) nextQuote();
   };
 
-  // TYPEWRITER EFFECT (SAFE VERSION — NO UNDEFINED)
   useEffect(() => {
     const quote = quotesData[quoteIndex].text;
     let i = 0;
@@ -41,7 +40,7 @@ export default function QuoteCard() {
 
     const typer = setInterval(() => {
       i++;
-      setDisplayedText(quote.substring(0, i)); // aman 100%
+      setDisplayedText(quote.substring(0, i)); 
       if (i >= quote.length) clearInterval(typer);
     }, 30);
 

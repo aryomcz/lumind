@@ -1,12 +1,11 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Hanya satu kali import!
+import { usePathname } from "next/navigation"; 
 import { Home, Smile, Grid, BookOpen, Phone } from "lucide-react";
 
 export default function MobileDock() {
   const pathname = usePathname();
 
-  // Jika di halaman Void, jangan tampilkan dock
   if (pathname === "/void") return null;
 
   const links = [
@@ -40,14 +39,12 @@ export default function MobileDock() {
                 isActive ? "text-teal-600 -translate-y-1" : "text-gray-400 hover:text-gray-600"
               }`}
             >
-              {/* Ikon dengan Background Glow kalau Aktif */}
               <div className={`p-2 rounded-2xl transition-all duration-300 ${
                 isActive ? "bg-teal-100 shadow-lg shadow-teal-200/50 scale-110" : ""
               }`}>
                 {link.icon}
               </div>
               
-              {/* Titik indikator di bawah */}
               <span className={`absolute -bottom-2 w-1 h-1 rounded-full bg-teal-600 transition-all duration-300 ${
                 isActive ? "opacity-100 scale-100" : "opacity-0 scale-0"
               }`}></span>

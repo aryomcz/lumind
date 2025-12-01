@@ -54,10 +54,9 @@ export default function MoodAnalytics() {
   );
 
   return (
-    // PERBAIKAN: Hapus bg-gradient, ganti min-h-screen transparan
     <div className="w-full relative overflow-hidden min-h-screen text-gray-800">
 
-      {/* Background Ornaments (Hanya hiasan di mode default) */}
+      {/* Background Ornaments */}
       <div className="fixed top-20 left-0 w-72 h-72 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob pointer-events-none"></div>
       <div className="fixed bottom-20 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 pointer-events-none"></div>
 

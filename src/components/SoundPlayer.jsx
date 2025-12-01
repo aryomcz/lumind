@@ -1,14 +1,14 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { CloudRain, Trees, Coffee, Volume2, X, Music, Power } from "lucide-react";
-import { useAmbience } from "@/context/AmbienceContext"; // Import Context
+import { useAmbience } from "@/context/AmbienceContext"; 
 
 export default function SoundPlayer() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSound, setActiveSound] = useState(null);
   const [volume, setVolume] = useState(0.5);
   
-  const { setAmbience } = useAmbience(); // Pakai Context
+  const { setAmbience } = useAmbience(); 
   const audioRef = useRef(null);
   const [mounted, setMounted] = useState(false);
 useEffect(() => setMounted(true), []);
@@ -41,11 +41,11 @@ useEffect(() => setMounted(true), []);
     if (activeSound === id) {
         // Matikan
         setActiveSound(null);
-        setAmbience("default"); // Balik ke background awal
+        setAmbience("default");
     } else {
         // Hidupkan
         setActiveSound(id);
-        setAmbience(id); // Ubah background sesuai id suara
+        setAmbience(id); 
     }
   };
 

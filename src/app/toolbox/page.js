@@ -5,12 +5,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Wind, Moon, Anchor, Mail, ArrowRight, Trash2, X } from "lucide-react";
 import Link from "next/link";
 
-// Components
 import SleepCalculator from "@/components/SleepCalculator";
 import GroundingExercise from "@/components/GroundingExercise";
 import FutureLetter from "@/components/FutureLetter";
 
-// --- KOMPONEN MODAL (POPUP) DENGAN PORTAL ---
+// KOMPONEN MODAL (POPUP)
 function ToolModal({ tool, onClose }) {
   const [mounted, setMounted] = useState(false);
 
@@ -70,7 +69,7 @@ function ToolModal({ tool, onClose }) {
   );
 }
 
-// --- KONTEN UTAMA TOOLBOX ---
+// KONTEN UTAMA
 function ToolboxContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -178,7 +177,7 @@ function ToolboxContent() {
   );
 }
 
-// --- KOMPONEN KARTU (ADAPTIF & RESPONSIF) ---
+// KOMPONEN KARTU 
 function ToolCardUI({ tool, index }) {
   const colorMap = {
     blue: "group-hover:text-blue-600!",
@@ -204,7 +203,7 @@ function ToolCardUI({ tool, index }) {
 
 
           <div>
-            {/* Judul & Deskripsi - Tanpa tanda seru agar adaptif */}
+            {/* Judul & Deskripsi */}
             <h3 className={`text-2xl md:text-5xl font-black text-gray-900 mb-1 md:mb-2 ${colorMap[tool.hover]} `}>
               {tool.label}
             </h3>

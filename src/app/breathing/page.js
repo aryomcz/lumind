@@ -5,7 +5,7 @@ import { Play, Square, RotateCcw, Wind } from "lucide-react";
 
 export default function Breathing() {
   const [isActive, setIsActive] = useState(false);
-  const [phase, setPhase] = useState("Ready"); // State: Ready, Inhale, Hold, Exhale
+  const [phase, setPhase] = useState("Ready"); 
   const [timeLeft, setTimeLeft] = useState(60);
   const [isFinished, setIsFinished] = useState(false);
 
@@ -107,7 +107,6 @@ export default function Breathing() {
   const config = getPhaseConfig();
 
   return (
-    // PERBAIKAN: HAPUS BG GRADIENT, GUNAKAN CLASS STANDAR AGAR AMBIENCE TERLIHAT
     <div className="w-full relative overflow-hidden min-h-screen flex flex-col items-center pt-32 pb-10 px-6">
 
       {/* HEADER */}

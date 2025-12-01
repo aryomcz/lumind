@@ -8,11 +8,9 @@ export default function OnboardingTutorial() {
   const [hasSeenTutorial, setHasSeenTutorial] = useState(false);
 
   useEffect(() => {
-    // Cek apakah user sudah pernah lihat tutorial
     const tutorialSeen = localStorage.getItem("lumind_tutorial_seen");
     
     if (!tutorialSeen) {
-      // Tampilkan tutorial setelah 2 detik (setelah loading selesai)
       const timer = setTimeout(() => {
         setShowTutorial(true);
       }, 2500);

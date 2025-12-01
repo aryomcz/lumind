@@ -164,8 +164,6 @@ export default function MoodPage() {
                 </div>
               </div>
               
-              {/* PERBAIKAN DI SINI: */}
-              {/* Jika selected, pakai 'text-black' (Pasti Hitam). Jika tidak, pakai logic biasa */}
               <span className={`font-bold text-sm ${selectedMood?.id === m.id ? "text-black" : "text-gray-500 group-hover:text-gray-800"}`}>
                 {m.label}
               </span>

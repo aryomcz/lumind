@@ -84,7 +84,7 @@ export default function TheVoid() {
             </button>
           </>
         ) : (
-          // PESAN SETELAH RELEASE (Diupdate warnanya)
+          // PESAN SETELAH RELEASE 
           <div className="animate-fade-in-up">
              <div className="w-24 h-24 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(16,185,129,0.2)] border border-emerald-500/20 animate-bounce-slow">
                 <Wind size={48} />

@@ -7,16 +7,14 @@ export default function WelcomeModal() {
   const { userName, setUserName } = useContext(UserContext);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
-  const [step, setStep] = useState(1); // 1: Intro, 2: Input Nama
+  const [step, setStep] = useState(1); 
 
   useEffect(() => {
     const savedName = localStorage.getItem("user_name");
 
-    // Jika belum pernah isi nama → tampilkan modal
     if (!savedName) {
       setShow(true);
     } else {
-      // Jika ada → set langsung ke context
       setUserName(savedName);
     }
   }, []);
@@ -24,13 +22,10 @@ export default function WelcomeModal() {
   const handleSave = () => {
     if (!name.trim()) return;
 
-    // Simpan ke localStorage
     localStorage.setItem("user_name", name);
 
-    // Simpan ke context → auto update ke seluruh app
     setUserName(name);
 
-    // Tutup modal
     setShow(false);
   };
 

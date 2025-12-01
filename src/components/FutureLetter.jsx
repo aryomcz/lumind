@@ -6,7 +6,7 @@ export default function FutureLetter() {
   const [message, setMessage] = useState("");
   const [openTime, setOpenTime] = useState("");
   const [capsules, setCapsules] = useState([]);
-  const [openedCapsule, setOpenedCapsule] = useState(null); // Kapsul yg sedang dibaca
+  const [openedCapsule, setOpenedCapsule] = useState(null); 
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // 1. Load Data & Jalankan Timer
@@ -142,7 +142,6 @@ export default function FutureLetter() {
                     </div>
                 ) : (
                     capsules.map((cap) => {
-                        // LOGIKA KUNCI: Apakah waktu buka sudah lewat?
                         const unlockDate = new Date(cap.openTime);
                         const isUnlocked = currentTime >= unlockDate;
 

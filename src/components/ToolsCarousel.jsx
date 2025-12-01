@@ -15,7 +15,6 @@ export default function ToolsCarousel() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  // ✅ TAMBAH: Track viewport untuk trigger animasi
   const { ref: containerRef, inView } = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -37,14 +36,13 @@ export default function ToolsCarousel() {
     onSelect();
   }, [emblaApi, onSelect]);
 
-  // ✅ TAMBAH: Stagger animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15, // Delay antar card: 150ms
-        delayChildren: 0.2,    // Delay awal: 200ms
+        staggerChildren: 0.15, 
+        delayChildren: 0.2,    
       },
     },
   };
@@ -62,7 +60,7 @@ export default function ToolsCarousel() {
     },
   };
 
-  // ✅ DATA: Definisikan cards di array untuk mapping
+  
   const cards = [
     {
       id: 1,
@@ -131,7 +129,6 @@ export default function ToolsCarousel() {
   ];
 
   return (
-    // ✅ WRAP dengan motion.div + container variants
     <motion.div
       ref={containerRef}
       className="relative w-full"
@@ -159,12 +156,11 @@ export default function ToolsCarousel() {
       <div className="overflow-hidden py-12" ref={emblaRef}>
         <div className="flex gap-6 px-2">
           
-          {/* ✅ MAP CARDS dengan motion.div */}
+          {/*  MAP CARDS dengan motion.div */}
           {cards.map((card) => {
             const IconComponent = card.icon;
             
             return (
-              // ✅ TAMBAH: motion.div untuk individual card animation
               <motion.div
                 key={card.id}
                 variants={cardVariants}

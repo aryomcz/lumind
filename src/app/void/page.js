@@ -5,19 +5,19 @@ import TheVoid from "@/components/TheVoid";
 
 export default function VoidPage() {
   return (
-    // LAYER 1: Background Hitam Pekat dengan Radial Gradient Misterius
+    // LAYER 1
     <div className="min-h-screen bg-black relative overflow-hidden flex flex-col items-center justify-center p-6 text-white selection:bg-purple-500 selection:text-white">
 
-      {/* LAYER 2: Efek Noise/Grain (Biar kayak film lama) */}
+      {/* LAYER 2 */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
       </div>
 
-      {/* LAYER 3: Ambient Glow (Cahaya Redup di Background) */}
+      {/* LAYER 3*/}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] animate-pulse-slow animation-delay-2000 pointer-events-none"></div>
 
-      {/* LAYER 4: Partikel Bintang Melayang (CSS Animation) */}
+      {/* LAYER 4*/}
       <div className="absolute inset-0 pointer-events-none">
         {/* Bintang 1 */}
         <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-[float_8s_ease-in-out_infinite] opacity-40 shadow-[0_0_10px_white]"></div>
@@ -29,7 +29,7 @@ export default function VoidPage() {
 
       {/* --- KONTEN UTAMA --- */}
 
-      {/* Tombol Keluar (Pojok Kiri Atas) */}
+      {/* Tombol Keluar */}
       <div className="absolute top-4 lg:top-8 left-3 lg:left-6 z-50 animate-fade-in-down">
         <Link
           href="/toolbox"
@@ -58,7 +58,6 @@ export default function VoidPage() {
           </p>
         </div>
 
-        {/* Panggil Komponen The Void */}
         <TheVoid />
 
       </div>

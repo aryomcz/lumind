@@ -12,7 +12,7 @@ export default function Navbar() {
   const { ambience } = useAmbience(); 
   const [scrolled, setScrolled] = useState(false);
 
-  // Cek apakah sedang mode gelap (Rain/Forest)
+  // Cek mode (Rain/Forest)
   const isDarkMode = ambience === 'rain' || ambience === 'forest';
 
   useEffect(() => {
@@ -21,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Sembunyikan Navbar di halaman Void
   if (pathname === "/void") return null;
 
   const navLinks = [

@@ -2,10 +2,6 @@
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 
-/**
- * MotionWrapper - Simple component untuk viewport animations
- * Automatically smooth, no manual timing needed
- */
 export function MotionWrapper({
   children,
   animation = "fadeInUp",
@@ -15,7 +11,7 @@ export function MotionWrapper({
 }) {
   const { ref, inView } = useInView({
     threshold: 0.1,
-    triggerOnce: true, // Animate only once
+    triggerOnce: true, 
   });
 
   // Predefined animation variants
@@ -97,10 +93,7 @@ export function MotionWrapper({
   );
 }
 
-/**
- * StaggerContainer - Container untuk stagger animations
- * Useful untuk grid/list items
- */
+
 export function StaggerContainer({
   children,
   staggerDelay = 0.1,
@@ -162,9 +155,7 @@ export function StaggerContainer({
   );
 }
 
-/**
- * Scroll reveal - Simple whileInView animation
- */
+
 export function ScrollReveal({
   children,
   animation = { opacity: [0, 1], y: [40, 0] },
