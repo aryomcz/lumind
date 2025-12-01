@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { ArrowRight, Wind, Smile, BookOpen, Heart, Sun, CloudRain, Gamepad2 } from "lucide-react";
 
 // Components
-import { MotionWrapper } from "@/components/MotionWrapper"; // Pastikan path ini benar sesuai file kamu
+import { MotionWrapper } from "@/components/MotionWrapper"; 
 import QuoteCard from "@/components/QuoteCard";
 import PopItGame from "@/components/PopItGame";
 import WellnessBuddy from "@/components/WellnessBuddy";
@@ -85,7 +85,7 @@ export default function Home() {
             {/* SUBTITLE */}
             <MotionWrapper animation="fadeInUp" duration={0.8} delay={0.4}>
               <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                LuMind adalah ruang digital untuk merawat pikiranmu. Lacak emosi, atur napas, dan temukan ketenangan.
+                Lumind adalah ruang digital untuk merawat pikiranmu. Lacak emosi, atur napas, dan temukan ketenangan.
               </p>
             </MotionWrapper>
 
